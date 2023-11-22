@@ -2,12 +2,14 @@
 #include "random.hpp"
 #include <math.h>
 #include <cmath>
+#include <complex>
+#include <corecrt_math_defines.h> 
 
 sil::Image dessine_cercle(sil::Image& photo, int center_x, int center_y){  //Pour rosace
     int thickness {10};
     for(int i {0}; i<photo.width(); i++){
         for(int j {0}; j<photo.height(); j++){
-            float const distance_carre { std::pow(i - center_x, 2) + std::pow(j - center_y, 2)};
+            float const distance_carre { static_cast<float>(std::pow(i - center_x, 2) + std::pow(j - center_y, 2))};
             if(distance_carre <= std::pow(100, 2)){
                 if(distance_carre >= std::pow(100-thickness, 2)){
                     // photo.pixel(i, j).r = 1.f;
@@ -402,5 +404,22 @@ void main_lison()
 //---------------------------------------------------------------------------------------
 
     //Exo 14 : Niv 3 : Fractale de Mandelbrot
+{
+    sil::Image image {500, 500};
+    std::complex<float> z{0.f, 0.f};
+    for(int i {0}; i<image.width(); i++){
+        for(int j {0}; j<image.height(); j++){
+            std::complex<float> c{static_cast<float>(i), static_cast<float>(j)};
+            z = z*z + c;
+            if(std::abs(z)<=2){
+                image.pixel(i, j) = glm::vec3(1.f);
+            }
+            else {
+                image.pixel(i, j) = glm::vec3(0.f);
+            }
+        }
+    }
+    image.save("output_l/fractale_mandelbrot.png");
+}
 
 }
