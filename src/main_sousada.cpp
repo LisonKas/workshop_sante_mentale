@@ -2,7 +2,7 @@
 #include "random.hpp"
 #include <cmath>    //a mettre en commentaire pour Sousada
 #include <math.h>
-//#include <corecrt_math_defines.h>   //a mettre en commentaire pour Lison
+#include <corecrt_math_defines.h>   //a mettre en commentaire pour Lison
 
 
 void GreenOnly(sil::Image& image)
