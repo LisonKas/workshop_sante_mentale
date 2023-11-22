@@ -2,7 +2,7 @@
 #include "random.hpp"
 #include <cmath>    //a mettre en commentaire pour Sousada
 #include <math.h>
-//#include <corecrt_math_defines.h>   //a mettre en commentaire pour Lison
+#include <corecrt_math_defines.h>   //a mettre en commentaire pour Lison
 
 
 void GreenOnly(sil::Image& image)
@@ -241,19 +241,42 @@ void Rosace(sil::Image& image, int centerX, int centerY)
     }
 }
 
-void Mosaique(sil::Image& image, int reduction)
+sil::Image copie_image(sil::Image& image, sil::Image const& logo, int debut_i, int debut_j)
 {
-    sil::Image imageReduite(image.width()/reduction, image.height()/reduction);
-    sil::Image mosaique(image.width(), image.height());
-
-    for (int y{0}; y < image.height(); y++) 
+    for(int i {0}; i<logo.width(); i++)
     {
-        for (int x{0}; x < image.width(); x++) 
+        for(int j {0}; j<logo.height(); j++)
         {
-            //
+            image.pixel(i+debut_i, j+debut_j) = logo.pixel(i, j);
         }
     }
-    mosaique.save("output_s/mosaique.png");
+    return image;
+}
+
+void Mosaique(sil::Image& logo)
+{
+    // sil::Image imageReduite(image.width()*reduction, image.height()*reduction);
+
+    // for (int y{0}; y < image.height(); y++) 
+    // {
+    //     for (int x{0}; x < image.width(); x++) 
+    //     {
+            
+    //     }
+    // }
+    // mosaique.save("output_s/mosaique.png");
+
+    sil::Image image{logo.width()*5, logo.height()*5};
+    int i = 0;
+    for(int a {0}; a<5; a++){
+        int j = 0;
+        for(int b {0}; b<5; b++){
+            copie_image(image, logo, i, j);
+            j += logo.height();
+        }
+        i += logo.width();
+    }
+    image.save("output_s/mosaique.png");
 }
 
 
@@ -360,8 +383,8 @@ void main_sousada()
 
     {
         //EXO : Mosaique
-        sil::Image image{"images/logo.png"};
-        Mosaique(image, 5);
+        sil::Image logo{"images/logo.png"};
+        Mosaique(logo);
     }
 
     {
