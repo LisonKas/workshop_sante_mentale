@@ -409,7 +409,8 @@ void main_lison()
     std::complex<float> z{0.f, 0.f};
     for(int i {0}; i<image.width(); i++){
         for(int j {0}; j<image.height(); j++){
-            std::complex<float> c{static_cast<float>(i), static_cast<float>(j)};
+            std::complex<float> c{static_cast<float>(i/250), static_cast<float>(j/250)};
+            //c = c/250.f;
             z = z*z + c;
             if(std::abs(z)<=2){
                 image.pixel(i, j) = glm::vec3(1.f);

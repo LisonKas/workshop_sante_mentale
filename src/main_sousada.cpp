@@ -241,7 +241,7 @@ void Rosace(sil::Image& image, int centerX, int centerY)
     }
 }
 
-sil::Image copie_image(sil::Image& image, sil::Image const& logo, int debut_i, int debut_j)
+sil::Image copie_image_sousada(sil::Image& image, sil::Image const& logo, int debut_i, int debut_j)
 {
     for(int i {0}; i<logo.width(); i++)
     {
@@ -271,7 +271,7 @@ void Mosaique(sil::Image& logo)
     for(int a {0}; a<5; a++){
         int j = 0;
         for(int b {0}; b<5; b++){
-            copie_image(image, logo, i, j);
+            copie_image_sousada(image, logo, i, j);
             j += logo.height();
         }
         i += logo.width();
