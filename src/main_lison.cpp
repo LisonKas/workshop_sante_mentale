@@ -406,16 +406,20 @@ void main_lison()
     //Exo 14 : Niv 3 : Fractale de Mandelbrot
 {
     sil::Image image {500, 500};
-    std::complex<float> z{0.f, 0.f};
+    int maxIter {300};
     for(int i {0}; i<image.width(); i++){
         for(int j {0}; j<image.height(); j++){
-            std::complex<float> c{static_cast<float>(i/250), static_cast<float>(j/250)};
-            //c = c/250.f;
-            z = z*z + c;
-            if(std::abs(z)<=2){
+            float x {(i-image.width()/2.0f)*4.0f/image.width()};
+            float y {(j-image.height()/2.0f)*4.0f/image.height()};
+            std::complex<float> c{x, y};
+            std::complex<float> z{0.f, 0.f};
+            int iter{0};
+            while(std::abs(z)<=2 && iter<maxIter){
+                z = z*z + c;
+                iter++;
                 image.pixel(i, j) = glm::vec3(1.f);
             }
-            else {
+            if(std::abs(z)>2){
                 image.pixel(i, j) = glm::vec3(0.f);
             }
         }
