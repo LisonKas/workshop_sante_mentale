@@ -553,10 +553,9 @@ void main_lison()
     sil::Image logo {"images/logo.png"};
     sil::Image image {logo};
     std::vector<std::vector<float>> kernel {
-        {1.f, 1.f, 1.f, 1.f},
-        {1.f, 1.f, 1.f, 1.f},
-        {1.f, 1.f, 1.f, 1.f},
-        {1.f, 1.f, 1.f, 1.f}
+        {-1.f, -1.f, -1.f},
+        {-1.f, 8.f, -1.f},
+        {-1.f, -1.f, -1.f}
     };
     float Total{0};
     for (std::vector<float> line : kernel)
