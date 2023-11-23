@@ -437,6 +437,7 @@ void main_lison()
 //-------------------------------------------------------------------------------------
 
 {
+    //Exo 15 : Convolutions
     sil::Image image {"images/logo.png"};
     //float coeff {static_cast<float>(1/9)};
     for(int i {1}; i<image.width()-1; i++){
@@ -471,19 +472,59 @@ void main_lison()
         }
     }
     image.save("output_l/convolution_petite.png");
+
+
     sil::Image image2 {"images/logo.png"};
-    for(int i {2}; i<image.width()-2; i++){
-        for(int j {2}; j<image.height()-2; j++){
-            glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
-            glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
-            glm::vec3 color3 = image.pixel(i-1, j-2)+image.pixel(i-1, j+2);
-            glm::vec3 color4 = image.pixel(i, j-2)+image.pixel(i, j+2);
-            glm::vec3 color5 = image.pixel(i+1, j-2)+image.pixel(i+1, j+2);
-            glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
-            image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+    for(int i {1}; i<image.width()-1; i++){
+        for(int j {1}; j<image.height()-1; j++){
+            if((i>=2 && i<image.width()-2) && (j>=2 && j<image.height()-2)){
+                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+                glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
+                glm::vec3 color3 = image.pixel(i-1, j-2)+image.pixel(i-1, j+2);
+                glm::vec3 color4 = image.pixel(i, j-2)+image.pixel(i, j+2);
+                glm::vec3 color5 = image.pixel(i+1, j-2)+image.pixel(i+1, j+2);
+                glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
+                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+            }
+            else if((i==1)&&(j==1)){
+                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+                glm::vec3 color2 = glm::vec3(5.f*0.f);
+                glm::vec3 color3 = glm::vec3(0.f)+image.pixel(i-1, j+2);
+                glm::vec3 color4 = glm::vec3(0.f)+image.pixel(i, j+2);
+                glm::vec3 color5 = glm::vec3(0.f)+image.pixel(i+1, j+2);
+                glm::vec3 color6 = glm::vec3(0.f)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
+                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+            }
+            else if(i==1 && j==image.height()-2){
+                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+                glm::vec3 color2 = glm::vec3(5.f*0.f);
+                glm::vec3 color3 = image.pixel(i-1, j-2)+glm::vec3(0.f);
+                glm::vec3 color4 = image.pixel(i, j-2)+glm::vec3(0.f);
+                glm::vec3 color5 = image.pixel(i+1, j-2)+glm::vec3(0.f);
+                glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+glm::vec3(0.f);
+                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+            }
+            else if(i==image.width()-2 && j==1){
+                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+                glm::vec3 color2 = glm::vec3(0.f)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
+                glm::vec3 color3 = glm::vec3(0.f)+image.pixel(i-1, j+2);
+                glm::vec3 color4 = glm::vec3(0.f)+image.pixel(i, j+2);
+                glm::vec3 color5 = glm::vec3(0.f)+image.pixel(i+1, j+2);
+                glm::vec3 color6 = glm::vec3(5.f*0.f);
+                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+            }
+            else if(i==image.width()-2 && j==image.height()-2){
+                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+                glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+glm::vec3(0.f);
+                glm::vec3 color3 = image.pixel(i-1, j-2)+glm::vec3(0.f);
+                glm::vec3 color4 = image.pixel(i, j-2)+glm::vec3(0.f);
+                glm::vec3 color5 = image.pixel(i+1, j-2)+glm::vec3(0.f);
+                glm::vec3 color6 = glm::vec3(5.f*0.f);
+                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+            }
         }
     }
-    image.save("output_l/convolution.png");
+    image.save("output_l/convolution_moyenne.png");
 }
 
 }
