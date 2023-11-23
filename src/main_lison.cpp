@@ -550,25 +550,27 @@ void main_lison()
 }
 {
     //Avec matrices -> le vrai, normalement
-    sil::Image image {"images/logo.png"};
+    sil::Image logo {"images/logo.png"};
+    sil::Image image {logo};
     std::vector<std::vector<float>> kernel {
-        {1.f/9.f, 1.f/0.9f, 1.f/9.f},
-        {1.f/9.f, 1.f/0.9f, 1.f/9.f},
-        {1.f/9.f, 1.f/0.9f, 1.f/9.f},
+        {1.f, 1.f, 1.f, 1.f},
+        {1.f, 1.f, 1.f, 1.f},
+        {1.f, 1.f, 1.f, 1.f},
+        {1.f, 1.f, 1.f, 1.f}
     };
     float Total{0};
     for (std::vector<float> line : kernel)
     {
-        for (float i : line)
+        for (float nb : line)
         {
-            Total += i;
+            Total += nb;
         }
     }
     int coordx {0};
     int coordy {0};
     for(int x {0}; x<image.width(); x++){
         for(int y {0}; y<image.height(); y++){
-            glm::vec3 couleur {0.f};
+            glm::vec3 couleur {0};
             for(int i {-(static_cast<int>(kernel.size())/2)}; i<(static_cast<int>(kernel.size())); i++){
                 for(int j {-(static_cast<int>(kernel.size())/2)}; j<(static_cast<int>(kernel[0].size())); j++){
                     coordx = x+i;
@@ -577,7 +579,7 @@ void main_lison()
                         couleur = image.pixel(coordx, coordy)*kernel.at(i+static_cast<int>(kernel.size())/2).at(j+static_cast<int>(kernel[0].size())/2);
                     }
                     else {
-                        image.pixel(x, y) += glm::vec3(0.f); 
+                        image.pixel(x, y) += glm::vec3(0); 
                     }
                 }
             }
