@@ -575,8 +575,8 @@ void main_lison()
                 for(int j {-(static_cast<int>(kernel.size())/2)}; j<(static_cast<int>(kernel[0].size())); j++){
                     coordx = x+i;
                     coordy = y+i;
-                    if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(kernel[0].size())/2<kernel[0].size() && i+static_cast<int>(kernel.size())/2<kernel.size()){
-                        couleur = image.pixel(coordx, coordy)*kernel.at(i+static_cast<int>(kernel.size())/2).at(j+static_cast<int>(kernel[0].size())/2);
+                    if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(kernel[0].size())/2<kernel[0].size() && i+static_cast<int>(kernel.size())/2<kernel.size()){ //
+                        couleur = image.pixel(coordx, coordy)*kernel[i][j];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
                     }
                     else {
                         image.pixel(x, y) += glm::vec3(0); 
