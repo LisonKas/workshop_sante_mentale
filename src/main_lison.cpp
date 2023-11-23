@@ -534,7 +534,7 @@ void main_lison()
         for(int y {0}; y<image.height(); y++){
             int i {0}, j {0};
             int iter {0};
-            if((x>=6 && x<image.width()-10) && (y>=10 && y<image.height()-6)){
+            if((x>=6 && x<image.width()-6) && (y>=6 && y<image.height()-6)){
                 for(i; i<6; i++){
                     for(j; j<6; j++){
                         image.pixel(x, y) += image.pixel(x+i, y+j)+image.pixel(x-i, y-j);
@@ -544,6 +544,31 @@ void main_lison()
                 image.pixel(x, y) /= glm::vec3(iter);
             }
             
+        }
+    }
+    image.save("output_l/convolution_boucles.png");
+}
+{
+    //Avec matrices -> le vrai, normalement
+    sil::Image image {"images/logo.png"};
+    std::vector<std::vector<float>> kernel {
+        {1.f/9.f, 1.f/0.9f, 1.f/9.f},
+        {1.f/9.f, 1.f/0.9f, 1.f/9.f},
+        {1.f/9.f, 1.f/0.9f, 1.f/9.f},
+    };
+    int coordx {0};
+    int coordy {0};
+    for(int x {0}; x<image.width(); x++){
+        for(int y {0}; y<image.height(); y++){
+            
+            for(int i {-(static_cast<int>(kernel.size()))/2}; i<(static_cast<int>(kernel.size())); i++){
+                for(int j {-(static_cast<int>(kernel.size()))/2}; j<(static_cast<int>(kernel.size())); j++){
+                    coordx = x+i;
+                    coordy = y+i;
+                    image.pixel(x, y) *= glm::vec3(kernel[i][j]);
+                }
+            }
+
         }
     }
     image.save("output_l/convolution.png");
