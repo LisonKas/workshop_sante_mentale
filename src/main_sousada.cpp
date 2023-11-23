@@ -3,6 +3,7 @@
 #include <cmath>    //a mettre en commentaire pour Sousada
 #include <math.h>
 #include <corecrt_math_defines.h>   //a mettre en commentaire pour Lison
+#include <glm/gtx/matrix_transform_2d.hpp>
 
 
 void GreenOnly(sil::Image& image)
@@ -20,6 +21,18 @@ void ChannelsSwap(sil::Image& image)
     for (glm::vec3& color : image.pixels())
     {
         std::swap(color.r, color.b);
+    }
+}
+
+
+void BlackAndWhite(sil::Image& image)
+{
+    for (glm::vec3& color : image.pixels())
+    {
+        float gris = (color.r + color.g + color.b)/3;
+        color.r = gris;
+        color.b = gris;
+        color.g = gris;
     }
 }
 
@@ -241,48 +254,124 @@ void Rosace(sil::Image& image, int centerX, int centerY)
     }
 }
 
-sil::Image copie_image_sousada(sil::Image& image, sil::Image const& logo, int debut_i, int debut_j)
-{
-    for(int i {0}; i<logo.width(); i++)
-    {
-        for(int j {0}; j<logo.height(); j++)
-        {
-            image.pixel(i+debut_i, j+debut_j) = logo.pixel(i, j);
-        }
-    }
-    return image;
-}
-
-void Mosaique(sil::Image& logo)
-{
-    // sil::Image imageReduite(image.width()*reduction, image.height()*reduction);
-
-    // for (int y{0}; y < image.height(); y++) 
-    // {
-    //     for (int x{0}; x < image.width(); x++) 
-    //     {
-            
-    //     }
-    // }
-    // mosaique.save("output_s/mosaique.png");
-
-    sil::Image image{logo.width()*5, logo.height()*5};
-    int i = 0;
-    for(int a {0}; a<5; a++){
-        int j = 0;
-        for(int b {0}; b<5; b++){
-            copie_image_sousada(image, logo, i, j);
-            j += logo.height();
-        }
-        i += logo.width();
-    }
-    image.save("output_s/mosaique.png");
-}
-
 
 void Glitch(sil::Image& image)
 {
-    //
+    int nb_rectangles_a_echanger = 50;
+
+    for (int i{0}; i < nb_rectangles_a_echanger; i++) {
+        // Coordonnées rectangle01
+        int x1 = random_int(0, image.width() - 1 - 50);
+        int y1 = random_int(0, image.height() - 1 - 10);
+        int width1 = random_int(10, 50);
+        int height1 = random_int(5, 10);
+
+        // Coordonnées rectangle02
+        int x2 = random_int(0, image.width() - 1 - 50);
+        int y2 = random_int(0, image.height() - 1 - 10);
+        int width2 = random_int(10, 50);
+        int height2 = random_int(5, 10);
+
+        // Echange rectangles
+        for (int dy{0}; dy < height1; dy++) {
+            for (int dx{0}; dx < width1; dx++) {
+                int rectangle01_X = x1 + dx;
+                int rectangle01_Y = y1 + dy;
+
+                int rectangle02_X = x2 + dx;
+                int rectangle02_Y = y2 + dy;
+
+                std::swap(image.pixel(rectangle01_X, rectangle01_Y), image.pixel(rectangle02_X, rectangle02_Y));
+            }
+        }
+    }
+}
+
+
+glm::vec2 rotated(glm::vec2 point, glm::vec2 center_of_rotation, float angle)
+{
+    return glm::vec2{glm::rotate(glm::mat3{1.f}, angle) * glm::vec3{point - center_of_rotation, 0.f}} + center_of_rotation;
+}
+
+void Vortex(sil::Image& image)
+{
+    // //tentative de vortex
+    // float centerX = static_cast<float>(image.width()) / 2.0f;
+    // float centerY = static_cast<float>(image.height()) / 2.0f;
+
+    // for (int y = 0; y < image.height(); y++) {
+    //     for (int x = 0; x < image.width(); x++) {
+            
+    //         float distanceX = static_cast<float>(x) - centerX;
+    //         float distanceY = static_cast<float>(y) - centerY;
+
+    //         float angle = atan2(distanceY, distanceX);
+
+    //         int rotatedX = static_cast<int>(centerX + cos(angle) * distanceX - sin(angle) * distanceY);
+    //         int rotatedY = static_cast<int>(centerY + sin(angle) * distanceX + cos(angle) * distanceY);
+
+    //         rotatedX = std::max(0, std::min(image.width() - 1, rotatedX));
+    //         rotatedY = std::max(0, std::min(image.height() - 1, rotatedY));
+
+    //         image.pixel(rotatedX, rotatedY) = image.pixel(x, y);
+    //     }
+    // }
+
+    
+    glm::vec2 center{image.width() / 2.f, image.height() / 2.f};
+
+    float vortexFactor = 0.2f;
+
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+            
+            glm::vec2 offset{x - center.x, y - center.y};
+
+            float distance = glm::length(offset);
+            float angle = distance * vortexFactor;
+
+            glm::vec2 rotatedOffset = rotated(offset, center, angle);
+
+            int rotatedX = static_cast<int>(rotatedOffset.x + center.x);
+            int rotatedY = static_cast<int>(rotatedOffset.y + center.y);
+
+            rotatedX = glm::clamp(rotatedX, 0, image.width() - 1);
+            rotatedY = glm::clamp(rotatedY, 0, image.height() - 1);
+
+            image.pixel(x, y) = image.pixel(rotatedX, rotatedY);
+        }
+    }
+}
+
+
+
+void Dithering(sil::Image& image)
+{
+    const int bayer_n = 4;
+    float bayer_matrix_4x4[][bayer_n] = {
+    {    -0.5,       0,  -0.375,   0.125 },
+    {    0.25,   -0.25,   0.375, - 0.125 },
+    { -0.3125,  0.1875, -0.4375,  0.0625 },
+    {  0.4375, -0.0625,  0.3125, -0.1875 },
+    };
+
+    for (int y = 0; y < image.height(); y++) {
+        //float orig_color = static_cast<float>(y) / image.height();;
+
+        for (int x = 0; x < image.width(); x++) {
+            float orig_color = image.pixel(x, y).r;
+            float color_result = 0.f;
+            float bayer_value = bayer_matrix_4x4[y % bayer_n][x % bayer_n];
+            float output_color = orig_color + (2 * bayer_value);
+
+            if (output_color > 0.5) {
+                color_result = 1.f;
+            }
+
+            glm::vec3 Color(color_result);
+            image.pixel(x, y) = Color;
+        }
+    }
 }
 
 
@@ -300,6 +389,13 @@ void main_sousada()
         sil::Image image{"images/logo.png"};
         ChannelsSwap(image);
         image.save("output_s/echange_canaux.png");
+    }
+
+    {
+        //EXO: Noir et blanc
+        sil::Image image{"images/logo.png"};
+        BlackAndWhite(image);
+        image.save("output_s/noir_et_blanc.png");
     }
 
     {
@@ -382,15 +478,23 @@ void main_sousada()
     }
 
     {
-        //EXO : Mosaique
-        sil::Image logo{"images/logo.png"};
-        Mosaique(logo);
+        //EXO : Glitch
+        sil::Image image{"images/logo.png"};
+        Glitch(image);
+        image.save("output_s/glitch.png");
     }
 
     {
-        //EXO : Glitch
+        //EXO : Vortex
         sil::Image image{"images/logo.png"};
+        Vortex(image);
+        image.save("output_s/vortex.png");
+    }
 
-        image.save("output_s/glitch.png");
+    {
+        //EXO : Tramage
+        sil::Image image{"images/photo.jpg"};
+        Dithering(image);
+        image.save("output_s/tramage.jpg");
     }
 }
