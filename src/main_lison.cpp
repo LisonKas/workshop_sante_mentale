@@ -556,19 +556,35 @@ void main_lison()
         {1.f/9.f, 1.f/0.9f, 1.f/9.f},
         {1.f/9.f, 1.f/0.9f, 1.f/9.f},
     };
+    float Total{0};
+    for (std::vector<float> line : kernel)
+    {
+        for (float i : line)
+        {
+            Total += i;
+        }
+    }
     int coordx {0};
     int coordy {0};
     for(int x {0}; x<image.width(); x++){
         for(int y {0}; y<image.height(); y++){
-            
-            for(int i {-(static_cast<int>(kernel.size()))/2}; i<(static_cast<int>(kernel.size())); i++){
-                for(int j {-(static_cast<int>(kernel.size()))/2}; j<(static_cast<int>(kernel.size())); j++){
+            glm::vec3 couleur {0.f};
+            for(int i {-(static_cast<int>(kernel.size())/2)}; i<(static_cast<int>(kernel.size())); i++){
+                for(int j {-(static_cast<int>(kernel.size())/2)}; j<(static_cast<int>(kernel[0].size())); j++){
                     coordx = x+i;
                     coordy = y+i;
-                    image.pixel(x, y) *= glm::vec3(kernel[i][j]);
+                    if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(kernel[0].size())/2<kernel[0].size() && i+static_cast<int>(kernel.size())/2<kernel.size()){
+                        couleur = image.pixel(coordx, coordy)*kernel.at(i+static_cast<int>(kernel.size())/2).at(j+static_cast<int>(kernel[0].size())/2);
+                    }
+                    else {
+                        image.pixel(x, y) += glm::vec3(0.f); 
+                    }
                 }
             }
-
+            if(Total!=0){
+                couleur=couleur/Total;
+            }
+            image.pixel(x, y) = couleur;
         }
     }
     image.save("output_l/convolution.png");
