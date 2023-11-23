@@ -406,7 +406,7 @@ void main_lison()
     //Exo 14 : Niv 3 : Fractale de Mandelbrot
 {
     sil::Image image {500, 500};
-    int maxIter {300};
+    int maxIter {50};
     for(int i {0}; i<image.width(); i++){
         for(int j {0}; j<image.height(); j++){
             float x {(i-image.width()/2.0f)*4.0f/image.width()};
@@ -419,9 +419,16 @@ void main_lison()
                 iter++;
                 image.pixel(i, j) = glm::vec3(1.f);
             }
-            if(std::abs(z)>2){
+            if(iter>maxIter){
                 image.pixel(i, j) = glm::vec3(0.f);
             }
+            else {
+                image.pixel(i, j) = glm::vec3(0.f + iter*0.02f);
+            }
+
+            // if(std::abs(z)>2){
+            //     image.pixel(i, j) = glm::vec3(0.f+i*0.02f);
+            // }
         }
     }
     image.save("output_l/fractale_mandelbrot.png");
