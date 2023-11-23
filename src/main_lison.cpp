@@ -527,4 +527,26 @@ void main_lison()
     image.save("output_l/convolution_moyenne.png");
 }
 
+{
+    //Avec autres boucles
+    sil::Image image {"images/logo.png"};
+    for(int x {0}; x<image.width(); x++){
+        for(int y {0}; y<image.height(); y++){
+            int i {0}, j {0};
+            int iter {0};
+            if((x>=6 && x<image.width()-10) && (y>=10 && y<image.height()-6)){
+                for(i; i<6; i++){
+                    for(j; j<6; j++){
+                        image.pixel(x, y) += image.pixel(x+i, y+j)+image.pixel(x-i, y-j);
+                        iter+=2;
+                    }
+                }
+                image.pixel(x, y) /= glm::vec3(iter);
+            }
+            
+        }
+    }
+    image.save("output_l/convolution.png");
+}
+
 }
