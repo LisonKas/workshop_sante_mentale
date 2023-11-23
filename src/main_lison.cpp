@@ -434,4 +434,43 @@ void main_lison()
     image.save("output_l/fractale_mandelbrot.png");
 }
 
+//-------------------------------------------------------------------------------------
+
+{
+    sil::Image image {"images/logo.png"};
+    //float coeff {static_cast<float>(1/9)};
+    for(int i {1}; i<image.width()-1; i++){
+        for(int j {1}; j<image.height()-1; j++){
+            // if(i==0 && j==0){
+            //     //float color_px_debordant {coeff*5.f*0.f};
+            //     image.pixel(i, j) = coeff*image.pixel(i, j);
+            //     image.pixel(i, j) += coeff*image.pixel(i, j+1)+coeff*image.pixel(i+1, j+1)+coeff*image.pixel(i+1, j); //+ (glm::vec3(color_px_debordant));
+            // }
+            // else if(i==0 && j==image.height()-1){
+            //     //float color_px_debordant {coeff*5.f*0.f};
+            //     image.pixel(i, j) = coeff*image.pixel(i, j);
+            //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i+1, j-1)+coeff*image.pixel(i+1, j); //+ (glm::vec3(color_px_debordant));
+            // }
+            // else if(i==image.width()-1 && j==0){
+            //     //float color_px_debordant {coeff*5.f*0.f};
+            //     image.pixel(i, j) = coeff*image.pixel(i, j);
+            //     image.pixel(i, j) += coeff*image.pixel(i, j+1)+coeff*image.pixel(i-1, j+1)+coeff*image.pixel(i-1, j); //+ (glm::vec3(color_px_debordant));
+            // }
+            // else if(i==image.width()-1 && j==image.height()-1){
+            //     //float color_px_debordant {coeff*5.f*0.f};
+            //     image.pixel(i, j) = coeff*image.pixel(i, j);
+            //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i-1, j-1)+coeff*image.pixel(i-1, j); //+ (glm::vec3(color_px_debordant));
+            // }
+            // else if((i>=1 && j>=1) && (i<=image.width()-2 && j<=image.height()-2)){
+            //     image.pixel(i, j) = coeff*image.pixel(i, j);
+            //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i-1, j-1)+coeff*image.pixel(i-1, j)+coeff*image.pixel(i-1, j+1)+coeff*image.pixel(i, j+1)+coeff*image.pixel(i+1, j+1)+coeff*image.pixel(i+1, j)+coeff*image.pixel(i+1, j-1);
+            // }
+
+            //image.pixel(i, j) = image.pixel(i, j);
+            image.pixel(i, j) = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1))/glm::vec3(8);
+        }
+    }
+    image.save("output_l/convolution.png");
+}
+
 }
