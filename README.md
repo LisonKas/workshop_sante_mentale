@@ -147,19 +147,43 @@ sil::Image dessine_cercle(sil::Image& photo, int center_x, int center_y){
 |![image](./images/logo.png) |![image](./output_l/mosaique.png)|
 | ------------- |-------------|
 
+Nous avons créé une image noir de 5 fois la taille de l'image originale.
+Puis avec une fonction `copie_image`, que nous avons appelé 25 fois dans deux boucles `for`, nous copions l'image original dessus.
+
 ---
 ## Mosaïque miroir
 | ![image](./images/logo.png)      | ![image](./output_l/mosaique_miroir_autre.png)        | ![image](./output_l/mosaique_miroir.png)  |
 | ------------- |-------------| -----|
+
+Le début se passe de la même manière que la mosaïque normale. Cependant nous avons créé 3 autres images avec les fonction `al_envers` et `image_en_miroir`, afin de pouvoir ensuite les copier sur l'image finale.
+
+La mosaïque intermédiaire obtenu était dû à l'inversion dans les boucles des codes `copie_image(image, logo_a_miroir, k, j);` et `copie_image(image, logo_a_l_envers, k, j);`. Ceci est plus visible dans le code.
 
 ---
 ## Glitch
 |![image](./images/logo.png) |![image](./output_l/glitch_2.png) |![image](./output_l/glitch.png)
 | ------------- |-------------| -----|
 
+Dû à des problèmes de coordonnées, nous avons obtenu le résultat intermédiaire ci-dessus, que nous avons nommé le "glitch fondant".
+
+Pour le cas du glitch normal, nous avons demandé des coordonnées de rectangle avec `random_int()`, puis dans ces coordonnées, nous avons demandé des valeurs de couleur avec aussi `random_float()`. Nous avons limité le nombre de glitch dans une boucle à 100.
+
 ---
 ## Fractale de Mandelbrot
 ![image](./output_l/fractale_mandelbrot.png)
+
+Nous avons fait une boucle `while`, dans laquelle nous vérifions pour chaque pixel le calcul de `std::abs(z)` et `z=z*z+c`.
+
+```cpp
+while(std::abs(z)<=2 && iter<maxIter){
+    z = z*z + c;
+    iter++;
+    image.pixel(i, j) = glm::vec3(1.f);
+}
+```
+
+Puis en fonction du résultat de `iter`, nous colorons les pixels en noir ou en blanc.
+Pour qu'il ait un degré différent de gris, nous avons fait le calcul : `image.pixel(i, j) = glm::vec3(0.f + iter*0.02f);`.
 
 ---
 ## Vortex
@@ -212,7 +236,42 @@ void Dithering(sil::Image& image)
 | ------------- |-------------|
 
 ---
-## Convolution (et essais de netteté)
+## Convolution
+|Original | Avec des boucles|Final|
+| ------------- |-------------|-------------|
+|![image](./images/logo.png) | ![image](./output_l/convolution_boucles.png) |![image](./output_l/convolution.png)|
+
+Après plusieurs essais avec des boucles, nous avons fini par trouver le code.
+Notre problème se trouvait dans le calcul de la couleur des pixels à l'intérieur des quatres boucles `for`.
+```cpp
+couleur += logo.pixel(coordx, coordy)*kernel[i+static_cast<int>(kernel.size())/2][j+static_cast<int>(kernel[0].size())/2];
+```
+`coordx` et `coordy` correspondent aux coordonées permettant d'accéder au bon pixel en fonction des coordonnées de la matrice `kernel`. Les calculs dans les coordonnées de `kernel`, sont fait afin d'éviter de sortir de la matrice et donc d'avoir un problème.
+
+## Netteté, contours, etc.
+|Emboss|Outline|Sharpen|
+| ------------- |-------------|-------------|
+|![image](./output_l/emboss.png) | ![image](./output_l/outline.png) |![image](./output_l/sharpen.png)|
+
+La matrice `kernel` a juste vu ses valeurs changer en fonction de l'effet demandé.
+Voici les différentes matrices :
+```cpp
+std::vector<std::vector<float>> matrix_emboss {
+        {-2.f, -1.f, 0.f},
+        {-1.f, 1.f, 1.f},
+        {0.f, 1.f, 2.f}
+    };
+std::vector<std::vector<float>> matrix_outline {
+        {-1.f, -1.f, -1.f},
+        {-1.f, 8.f, -1.f},
+        {-1.f, -1.f, -1.f}
+    };
+std::vector<std::vector<float>> matrix_sharpen {
+        {0.f, -1.f, 0.f},
+        {-1.f, 5.f, -1.f},
+        {0.f, -1.f, 0.f}
+    };
+```
 
 ---
 ## Tri de pixels
