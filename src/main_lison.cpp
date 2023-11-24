@@ -591,4 +591,62 @@ void main_lison()
     image.save("output_l/convolution.png");
 }
 
+//Tentative avec différentes matrices : 
+
+{
+    std::vector<std::vector<float>> matrix_emboss {
+        {-2.f, -1.f, 0.f},
+        {-1.f, 1.f, 1.f},
+        {0.f, 1.f, 2.f}
+    };
+    std::vector<std::vector<float>> matrix_outline {
+        {-1.f, -1.f, -1.f},
+        {-1.f, 8.f, -1.f},
+        {-1.f, -1.f, -1.f}
+    };
+    std::vector<std::vector<int>> matrix_sharpen {
+        {0, -1, 0},
+        {-1, 5, -1},
+        {0, -1, 0}
+    };
+
+    sil::Image logo {"images/logo.png"};
+    sil::Image image {logo};
+    int Total{0};
+    for (std::vector<int> line : matrix_sharpen)
+    {
+        for (int nb : line)
+        {
+            Total += nb;
+        }
+    }
+    for(int i {0}; i<matrix_sharpen.size(); i++){
+        
+    }
+    int coordx {0};
+    int coordy {0};
+    for(int x {0}; x<image.width(); x++){
+        for(int y {0}; y<image.height(); y++){
+            glm::vec3 couleur {0};
+            for(int i {-(static_cast<int>(matrix_sharpen.size())/2)}; i<(static_cast<int>(matrix_sharpen.size())); i++){
+                for(int j {-(static_cast<int>(matrix_sharpen.size())/2)}; j<(static_cast<int>(matrix_sharpen[0].size())); j++){
+                    coordx = x+i;
+                    coordy = y+i;
+                    if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(matrix_sharpen[0].size())/2<matrix_sharpen[0].size() && i+static_cast<int>(matrix_sharpen.size())/2<matrix_sharpen.size()){ //
+                        couleur = image.pixel(coordx, coordy)*static_cast<float>(matrix_sharpen[i+static_cast<int>(matrix_sharpen.size())/2 ][j+static_cast<int>(matrix_sharpen[0].size())/2]);   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
+                    }
+                    else {
+                        image.pixel(x, y) += glm::vec3(0); 
+                    }
+                }
+            }
+            if(Total!=0){
+                couleur=couleur/static_cast<float>(Total);
+            }
+            image.pixel(x, y) = couleur;
+        }
+    }
+    image.save("output_l/sharpen_essai.png");
+}
+
 }
