@@ -22,7 +22,8 @@
 ## Dégradé
 ![image](./output_l/degrade.png)
 
-Le calcul a pris un peu de temps à être trouvé, mais c'est :
+
+La découverte du calcul a demandé un certain temps, mais voici le résultat :
 ```cpp
 float color = static_cast<float>(i) /(image.width()-1);
 image.pixel(i, y) += color;
@@ -37,13 +38,12 @@ Nous avons eu deux façons de faire :
 ```cpp
 std::swap(image.pixel(i, y), image.pixel(image.width()-1-i, y));
 ```
+
 Ou avec une fonction :
 ```cpp
 int miroir = image.width()-x;
 imageInverse.pixel(miroir, y) = image.pixel(x, y);
 ```
----
-![image](./output_s/miroir.png)
 
 Autre effet "miroir" découvert avec ce code-ci :
 
@@ -52,13 +52,14 @@ int miroir = image.width()-x;
 glm::vec3 couleur = image.pixel(x, y);
 image.pixel(miroir, y) = couleur;
 ```
----
+![image](./output_s/miroir.png)
 
+---
 ## Image bruitée
 |![image](./images/logo.png) |![image](./output_l/bruitee.png)|
 | ------------- |-------------|
 
-Pour cet effet, nous avons fait en sorte d'avoir des coordonnées de pixels `random`, et ensuite nous avons fait de même pour chaque partie de la couleur du pixel en question.
+Pour cet effet, nous avons fait en sorte d'avoir des coordonnées de pixels `random`. Ensuite, nous avons fait de même pour chaque partie de la couleur du pixel en question.
 
 ---
 ## Rotation 90°
@@ -72,7 +73,7 @@ Nous avons créé une nouvelle image en inversant les valeurs de `width` et de `
 |![image](./images/logo.png) |![image](./output_l/rgb_split.png)|
 | ------------- |-------------|
 
-On ne sait pas trop comment expliquer donc voici le code :
+On ne sait pas trop comment expliquer, donc voici le code :
 ```cpp
 sil::Image split{image.width(), image.height()};
     for(int i {0}; i<split.width(); i++){
@@ -102,7 +103,7 @@ sil::Image split{image.width(), image.height()};
 | ------------- |-------------| -----|
 |![image](./images/photo.jpg) |![image](./output_s/eclaircissement.jpg) |![image](./output_l/photo_apres_assombrissement.jpg)|
 
-Pour les deux nous avons utilisé la fonction `pow()`, avec différentes valeurs de puissance.
+Pour les deux images, nous avons utilisé la fonction `pow()` avec différentes valeurs de puissance.
 
 ---
 ## Disque
@@ -110,7 +111,7 @@ Pour les deux nous avons utilisé la fonction `pow()`, avec différentes valeurs
 
 Dans le `if` pour colorer les bons pixels, nous avons utilisé :
 ```cpp
-std::pow(i - image.width()/2, 2) + std::pow(j - image.height()/2, 2) <= std::pow(100, 2);
+pow(i - image.width()/2, 2) + pow(j - image.height()/2, 2) <= pow(100, 2);
 ```
 
 ---
@@ -147,17 +148,17 @@ sil::Image dessine_cercle(sil::Image& photo, int center_x, int center_y){
 |![image](./images/logo.png) |![image](./output_l/mosaique.png)|
 | ------------- |-------------|
 
-Nous avons créé une image noir de 5 fois la taille de l'image originale.
-Puis avec une fonction `copie_image`, que nous avons appelé 25 fois dans deux boucles `for`, nous copions l'image original dessus.
+Nous avons créé une image noire de 5 fois la taille de l'image originale.
+Puis avec une fonction `copie_image`, que nous avons appelé 25 fois dans deux boucles `for`, nous copions l'image originale dessus.
 
 ---
 ## Mosaïque miroir
 | ![image](./images/logo.png)      | ![image](./output_l/mosaique_miroir_autre.png)        | ![image](./output_l/mosaique_miroir.png)  |
 | ------------- |-------------| -----|
 
-Le début se passe de la même manière que la mosaïque normale. Cependant nous avons créé 3 autres images avec les fonction `al_envers` et `image_en_miroir`, afin de pouvoir ensuite les copier sur l'image finale.
+Le début se passe de la même manière que la mosaïque normale. Cependant, nous avons créé 3 autres images avec les fonctions `al_envers` et `image_en_miroir`, afin de pouvoir ensuite les copier sur l'image finale.
 
-La mosaïque intermédiaire obtenu était dû à l'inversion dans les boucles des codes `copie_image(image, logo_a_miroir, k, j);` et `copie_image(image, logo_a_l_envers, k, j);`. Ceci est plus visible dans le code.
+La mosaïque intermédiaire obtenue était due à l'inversion dans les boucles des codes `copie_image(image, logo_a_miroir, k, j);` et `copie_image(image, logo_a_l_envers, k, j);`. Ceci est plus visible dans le code concerné.
 
 ---
 ## Glitch
@@ -166,13 +167,13 @@ La mosaïque intermédiaire obtenu était dû à l'inversion dans les boucles de
 
 Dû à des problèmes de coordonnées, nous avons obtenu le résultat intermédiaire ci-dessus, que nous avons nommé le "glitch fondant".
 
-Pour le cas du glitch normal, nous avons demandé des coordonnées de rectangle avec `random_int()`, puis dans ces coordonnées, nous avons demandé des valeurs de couleur avec aussi `random_float()`. Nous avons limité le nombre de glitch dans une boucle à 100.
+Pour le cas du glitch normal, nous avons demandé des coordonnées de rectangle avec `random_int()`. Puis dans ces coordonnées, nous avons aussi demandé des valeurs de couleur avec `random_float()`. Nous avons limité le nombre de glitch dans une boucle à 100.
 
 ---
 ## Fractale de Mandelbrot
 ![image](./output_l/fractale_mandelbrot.png)
 
-Nous avons fait une boucle `while`, dans laquelle nous vérifions pour chaque pixel le calcul de `std::abs(z)` et `z=z*z+c`.
+Nous avons créé une boucle `while`, dans laquelle nous vérifions pour chaque pixel le calcul de `std::abs(z)` et `z=z*z+c`.
 
 ```cpp
 while(std::abs(z)<=2 && iter<maxIter){
@@ -183,12 +184,14 @@ while(std::abs(z)<=2 && iter<maxIter){
 ```
 
 Puis en fonction du résultat de `iter`, nous colorons les pixels en noir ou en blanc.
-Pour qu'il ait un degré différent de gris, nous avons fait le calcul : `image.pixel(i, j) = glm::vec3(0.f + iter*0.02f);`.
+Pour qu'il ait un degré différent de gris, nous avons effectué le calcul : `image.pixel(i, j) = glm::vec3(0.f + iter*0.02f);`.
 
 ---
 ## Vortex
 |![image](./images/logo.png) |![image](./output_s/vortex.png)
 | ------------- |-------------|
+
+Nous avons créé un effet de vortex sur une image en effectuant une rotation des pixels autour du centre de l'image. Il itère sur chaque pixel, calcule la distance au centre avec `glm::length(offset)`, utilise cette distance pour déterminer un angle de rotation, et applique ensuite une rotation à chaque pixel. Les coordonnées après rotation sont converties en entiers et clippées grâce à `glm::clamp` pour rester dans les limites de l'image. Enfin, la couleur du pixel après rotation est assignée au pixel d'origine dans l'image, produisant un effet de vortex. 
 
 ---
 ## Tramage
@@ -235,25 +238,28 @@ void Dithering(sil::Image& image)
 |![image](./images/photo.jpg) |![image](./output_s/histogramme.jpg)|
 | ------------- |-------------|
 
+Ce code normalise les valeurs des composantes rouge *r*, verte *g*, et bleue *b* de chaque pixel dans une image. Il parcourt l'image deux fois : la première fois pour déterminer les valeurs minimales et maximales de chaque composante, et la deuxième fois pour normaliser les valeurs des pixels en fonction de ces extrêmes. La normalisation est effectuée en ajustant les valeurs de chaque composante à une échelle entre 0 et 1 en utilisant la formule `(pixel_original - valeur_minimale) / (valeur_maximale - valeur_minimale)`.
+
 ---
 ## Convolution
 |Original | Avec des boucles|Final|
 | ------------- |-------------|-------------|
 |![image](./images/logo.png) | ![image](./output_l/convolution_boucles.png) |![image](./output_l/convolution.png)|
 
-Après plusieurs essais avec des boucles, nous avons fini par trouver le code.
+Après plusieurs essais avec des boucles, nous avons fini par trouver l'algorithme.
 Notre problème se trouvait dans le calcul de la couleur des pixels à l'intérieur des quatres boucles `for`.
 ```cpp
 couleur += logo.pixel(coordx, coordy)*kernel[i+static_cast<int>(kernel.size())/2][j+static_cast<int>(kernel[0].size())/2];
 ```
-`coordx` et `coordy` correspondent aux coordonées permettant d'accéder au bon pixel en fonction des coordonnées de la matrice `kernel`. Les calculs dans les coordonnées de `kernel`, sont fait afin d'éviter de sortir de la matrice et donc d'avoir un problème.
+`coordx` et `coordy` correspondent aux coordonées permettant d'accéder au bon pixel en fonction des coordonnées de la matrice `kernel`. Les calculs dans les coordonnées de `kernel` sont effectués afin d'éviter de sortir de la matrice et donc d'avoir un problème.
 
+---
 ## Netteté, contours, etc.
 |Emboss|Outline|Sharpen|
 | ------------- |-------------|-------------|
 |![image](./output_l/emboss.png) | ![image](./output_l/outline.png) |![image](./output_l/sharpen.png)|
 
-La matrice `kernel` a juste vu ses valeurs changer en fonction de l'effet demandé.
+Les valeurs de la matrice `kernel` ont simplement été ajustées en fonction de l'effet demandé.
 Voici les différentes matrices :
 ```cpp
 std::vector<std::vector<float>> matrix_emboss {
@@ -277,3 +283,5 @@ std::vector<std::vector<float>> matrix_sharpen {
 ## Tri de pixels
 |![image](./images/logo.png) |![image](./output_s/tri_pixels.png)|
 | ------------- |-------------|
+
+Nous avons utilisé `image.pixels()` pour récupérer le tableau contenant tous les pixels de l'image et nous les avons triés avec `std::sort` par colonne selon la composante rouge de manière croissante. L'algorithme itère sur chaque colonne de l'image, extrait les pixels de la colonne dans un tableau, les trie en utilisant la composante rouge comme critère de tri, puis met à jour les pixels de la colonne dans l'image avec les pixels triés.
