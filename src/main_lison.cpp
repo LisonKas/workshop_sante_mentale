@@ -553,18 +553,18 @@ void main_lison()
     sil::Image logo {"images/logo.png"};
     sil::Image image {logo};
     std::vector<std::vector<float>> kernel {
-        {-1.f, -1.f, -1.f},
-        {-1.f, 8.f, -1.f},
-        {-1.f, -1.f, -1.f}
+        {1.f/9.f, 1.f/9.f, 1.f/9.f},
+        {1.f/9.f, 1.f/9.f, 1.f/9.f},
+        {1.f/9.f, 1.f/9.f, 1.f/9.f}
     };
-    float Total{0};
-    for (std::vector<float> line : kernel)
-    {
-        for (float nb : line)
-        {
-            Total += nb;
-        }
-    }
+    // float Total{0};
+    // for (std::vector<float> line : kernel)
+    // {
+    //     for (float nb : line)
+    //     {
+    //         Total += nb;
+    //     }
+    // }
     int coordx {0};
     int coordy {0};
     for(int x {0}; x<image.width(); x++){
@@ -575,16 +575,16 @@ void main_lison()
                     coordx = x+i;
                     coordy = y+i;
                     if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(kernel[0].size())/2<kernel[0].size() && i+static_cast<int>(kernel.size())/2<kernel.size()){ //
-                        couleur = image.pixel(coordx, coordy)*kernel[i][j];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
+                        couleur = logo.pixel(coordx, coordy)*kernel[i+static_cast<int>(kernel.size())/2][j+static_cast<int>(kernel[0].size())/2];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
                     }
                     else {
                         image.pixel(x, y) += glm::vec3(0); 
                     }
                 }
             }
-            if(Total!=0){
-                couleur=couleur/Total;
-            }
+            // if(Total!=0){
+            //     couleur=couleur/Total;
+            // }
             image.pixel(x, y) = couleur;
         }
     }
