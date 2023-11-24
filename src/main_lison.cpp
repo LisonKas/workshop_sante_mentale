@@ -435,121 +435,124 @@ void main_lison()
 }
 
 //-------------------------------------------------------------------------------------
+//CECI SONT TOUTES LES TENTATIVES POUR LA CONVOLUTION
+// {
+//     //Exo 15 : Convolutions
+//     sil::Image image {"images/logo.png"};
+//     //float coeff {static_cast<float>(1/9)};
+//     for(int i {1}; i<image.width()-1; i++){
+//         for(int j {1}; j<image.height()-1; j++){
+//             // if(i==0 && j==0){
+//             //     //float color_px_debordant {coeff*5.f*0.f};
+//             //     image.pixel(i, j) = coeff*image.pixel(i, j);
+//             //     image.pixel(i, j) += coeff*image.pixel(i, j+1)+coeff*image.pixel(i+1, j+1)+coeff*image.pixel(i+1, j); //+ (glm::vec3(color_px_debordant));
+//             // }
+//             // else if(i==0 && j==image.height()-1){
+//             //     //float color_px_debordant {coeff*5.f*0.f};
+//             //     image.pixel(i, j) = coeff*image.pixel(i, j);
+//             //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i+1, j-1)+coeff*image.pixel(i+1, j); //+ (glm::vec3(color_px_debordant));
+//             // }
+//             // else if(i==image.width()-1 && j==0){
+//             //     //float color_px_debordant {coeff*5.f*0.f};
+//             //     image.pixel(i, j) = coeff*image.pixel(i, j);
+//             //     image.pixel(i, j) += coeff*image.pixel(i, j+1)+coeff*image.pixel(i-1, j+1)+coeff*image.pixel(i-1, j); //+ (glm::vec3(color_px_debordant));
+//             // }
+//             // else if(i==image.width()-1 && j==image.height()-1){
+//             //     //float color_px_debordant {coeff*5.f*0.f};
+//             //     image.pixel(i, j) = coeff*image.pixel(i, j);
+//             //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i-1, j-1)+coeff*image.pixel(i-1, j); //+ (glm::vec3(color_px_debordant));
+//             // }
+//             // else if((i>=1 && j>=1) && (i<=image.width()-2 && j<=image.height()-2)){
+//             //     image.pixel(i, j) = coeff*image.pixel(i, j);
+//             //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i-1, j-1)+coeff*image.pixel(i-1, j)+coeff*image.pixel(i-1, j+1)+coeff*image.pixel(i, j+1)+coeff*image.pixel(i+1, j+1)+coeff*image.pixel(i+1, j)+coeff*image.pixel(i+1, j-1);
+//             // }
 
-{
-    //Exo 15 : Convolutions
-    sil::Image image {"images/logo.png"};
-    //float coeff {static_cast<float>(1/9)};
-    for(int i {1}; i<image.width()-1; i++){
-        for(int j {1}; j<image.height()-1; j++){
-            // if(i==0 && j==0){
-            //     //float color_px_debordant {coeff*5.f*0.f};
-            //     image.pixel(i, j) = coeff*image.pixel(i, j);
-            //     image.pixel(i, j) += coeff*image.pixel(i, j+1)+coeff*image.pixel(i+1, j+1)+coeff*image.pixel(i+1, j); //+ (glm::vec3(color_px_debordant));
-            // }
-            // else if(i==0 && j==image.height()-1){
-            //     //float color_px_debordant {coeff*5.f*0.f};
-            //     image.pixel(i, j) = coeff*image.pixel(i, j);
-            //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i+1, j-1)+coeff*image.pixel(i+1, j); //+ (glm::vec3(color_px_debordant));
-            // }
-            // else if(i==image.width()-1 && j==0){
-            //     //float color_px_debordant {coeff*5.f*0.f};
-            //     image.pixel(i, j) = coeff*image.pixel(i, j);
-            //     image.pixel(i, j) += coeff*image.pixel(i, j+1)+coeff*image.pixel(i-1, j+1)+coeff*image.pixel(i-1, j); //+ (glm::vec3(color_px_debordant));
-            // }
-            // else if(i==image.width()-1 && j==image.height()-1){
-            //     //float color_px_debordant {coeff*5.f*0.f};
-            //     image.pixel(i, j) = coeff*image.pixel(i, j);
-            //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i-1, j-1)+coeff*image.pixel(i-1, j); //+ (glm::vec3(color_px_debordant));
-            // }
-            // else if((i>=1 && j>=1) && (i<=image.width()-2 && j<=image.height()-2)){
-            //     image.pixel(i, j) = coeff*image.pixel(i, j);
-            //     image.pixel(i, j) += coeff*image.pixel(i, j-1)+coeff*image.pixel(i-1, j-1)+coeff*image.pixel(i-1, j)+coeff*image.pixel(i-1, j+1)+coeff*image.pixel(i, j+1)+coeff*image.pixel(i+1, j+1)+coeff*image.pixel(i+1, j)+coeff*image.pixel(i+1, j-1);
-            // }
-
-            //image.pixel(i, j) = image.pixel(i, j);
-            image.pixel(i, j) = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1))/glm::vec3(8);
-        }
-    }
-    image.save("output_l/convolution_petite.png");
+//             //image.pixel(i, j) = image.pixel(i, j);
+//             image.pixel(i, j) = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1))/glm::vec3(8);
+//         }
+//     }
+//     image.save("output_l/convolution_petite.png");
 
 
-    sil::Image image2 {"images/logo.png"};
-    for(int i {1}; i<image.width()-1; i++){
-        for(int j {1}; j<image.height()-1; j++){
-            if((i>=2 && i<image.width()-2) && (j>=2 && j<image.height()-2)){
-                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
-                glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
-                glm::vec3 color3 = image.pixel(i-1, j-2)+image.pixel(i-1, j+2);
-                glm::vec3 color4 = image.pixel(i, j-2)+image.pixel(i, j+2);
-                glm::vec3 color5 = image.pixel(i+1, j-2)+image.pixel(i+1, j+2);
-                glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
-                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
-            }
-            else if((i==1)&&(j==1)){
-                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
-                glm::vec3 color2 = glm::vec3(5.f*0.f);
-                glm::vec3 color3 = glm::vec3(0.f)+image.pixel(i-1, j+2);
-                glm::vec3 color4 = glm::vec3(0.f)+image.pixel(i, j+2);
-                glm::vec3 color5 = glm::vec3(0.f)+image.pixel(i+1, j+2);
-                glm::vec3 color6 = glm::vec3(0.f)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
-                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
-            }
-            else if(i==1 && j==image.height()-2){
-                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
-                glm::vec3 color2 = glm::vec3(5.f*0.f);
-                glm::vec3 color3 = image.pixel(i-1, j-2)+glm::vec3(0.f);
-                glm::vec3 color4 = image.pixel(i, j-2)+glm::vec3(0.f);
-                glm::vec3 color5 = image.pixel(i+1, j-2)+glm::vec3(0.f);
-                glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+glm::vec3(0.f);
-                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
-            }
-            else if(i==image.width()-2 && j==1){
-                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
-                glm::vec3 color2 = glm::vec3(0.f)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
-                glm::vec3 color3 = glm::vec3(0.f)+image.pixel(i-1, j+2);
-                glm::vec3 color4 = glm::vec3(0.f)+image.pixel(i, j+2);
-                glm::vec3 color5 = glm::vec3(0.f)+image.pixel(i+1, j+2);
-                glm::vec3 color6 = glm::vec3(5.f*0.f);
-                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
-            }
-            else if(i==image.width()-2 && j==image.height()-2){
-                glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
-                glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+glm::vec3(0.f);
-                glm::vec3 color3 = image.pixel(i-1, j-2)+glm::vec3(0.f);
-                glm::vec3 color4 = image.pixel(i, j-2)+glm::vec3(0.f);
-                glm::vec3 color5 = image.pixel(i+1, j-2)+glm::vec3(0.f);
-                glm::vec3 color6 = glm::vec3(5.f*0.f);
-                image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
-            }
-        }
-    }
-    image.save("output_l/convolution_moyenne.png");
-}
+//     sil::Image image2 {"images/logo.png"};
+//     for(int i {1}; i<image.width()-1; i++){
+//         for(int j {1}; j<image.height()-1; j++){
+//             if((i>=2 && i<image.width()-2) && (j>=2 && j<image.height()-2)){
+//                 glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+//                 glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
+//                 glm::vec3 color3 = image.pixel(i-1, j-2)+image.pixel(i-1, j+2);
+//                 glm::vec3 color4 = image.pixel(i, j-2)+image.pixel(i, j+2);
+//                 glm::vec3 color5 = image.pixel(i+1, j-2)+image.pixel(i+1, j+2);
+//                 glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
+//                 image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+//             }
+//             else if((i==1)&&(j==1)){
+//                 glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+//                 glm::vec3 color2 = glm::vec3(5.f*0.f);
+//                 glm::vec3 color3 = glm::vec3(0.f)+image.pixel(i-1, j+2);
+//                 glm::vec3 color4 = glm::vec3(0.f)+image.pixel(i, j+2);
+//                 glm::vec3 color5 = glm::vec3(0.f)+image.pixel(i+1, j+2);
+//                 glm::vec3 color6 = glm::vec3(0.f)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+image.pixel(i+2, j+2);
+//                 image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+//             }
+//             else if(i==1 && j==image.height()-2){
+//                 glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+//                 glm::vec3 color2 = glm::vec3(5.f*0.f);
+//                 glm::vec3 color3 = image.pixel(i-1, j-2)+glm::vec3(0.f);
+//                 glm::vec3 color4 = image.pixel(i, j-2)+glm::vec3(0.f);
+//                 glm::vec3 color5 = image.pixel(i+1, j-2)+glm::vec3(0.f);
+//                 glm::vec3 color6 = image.pixel(i+2, j-2)+image.pixel(i+2, j-1)+image.pixel(i+2, j)+image.pixel(i+2, j+1)+glm::vec3(0.f);
+//                 image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+//             }
+//             else if(i==image.width()-2 && j==1){
+//                 glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+//                 glm::vec3 color2 = glm::vec3(0.f)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+image.pixel(i-2, j+2);
+//                 glm::vec3 color3 = glm::vec3(0.f)+image.pixel(i-1, j+2);
+//                 glm::vec3 color4 = glm::vec3(0.f)+image.pixel(i, j+2);
+//                 glm::vec3 color5 = glm::vec3(0.f)+image.pixel(i+1, j+2);
+//                 glm::vec3 color6 = glm::vec3(5.f*0.f);
+//                 image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+//             }
+//             else if(i==image.width()-2 && j==image.height()-2){
+//                 glm::vec3 color1 = (image.pixel(i, j)+image.pixel(i, j-1)+image.pixel(i-1, j-1)+image.pixel(i-1, j)+image.pixel(i-1, j+1)+image.pixel(i, j+1)+image.pixel(i+1, j+1)+image.pixel(i+1, j)+image.pixel(i+1, j-1));
+//                 glm::vec3 color2 = image.pixel(i-2, j-2)+image.pixel(i-2, j-1)+image.pixel(i-2, j)+image.pixel(i-2, j+1)+glm::vec3(0.f);
+//                 glm::vec3 color3 = image.pixel(i-1, j-2)+glm::vec3(0.f);
+//                 glm::vec3 color4 = image.pixel(i, j-2)+glm::vec3(0.f);
+//                 glm::vec3 color5 = image.pixel(i+1, j-2)+glm::vec3(0.f);
+//                 glm::vec3 color6 = glm::vec3(5.f*0.f);
+//                 image.pixel(i, j) = (color1+color2+color3+color4+color5+color6)/glm::vec3(9+5+2+2+2+5);
+//             }
+//         }
+//     }
+//     image.save("output_l/convolution_moyenne.png");
+// }
 
-{
-    //Avec autres boucles
-    sil::Image image {"images/logo.png"};
-    for(int x {0}; x<image.width(); x++){
-        for(int y {0}; y<image.height(); y++){
-            int i {0}, j {0};
-            int iter {0};
-            if((x>=6 && x<image.width()-6) && (y>=6 && y<image.height()-6)){
-                for(i; i<6; i++){
-                    for(j; j<6; j++){
-                        image.pixel(x, y) += image.pixel(x+i, y+j)+image.pixel(x-i, y-j);
-                        iter+=2;
-                    }
-                }
-                image.pixel(x, y) /= glm::vec3(iter);
-            }
+// {
+//     //Avec autres boucles
+//     sil::Image image {"images/logo.png"};
+//     for(int x {0}; x<image.width(); x++){
+//         for(int y {0}; y<image.height(); y++){
+//             int i {0}, j {0};
+//             int iter {0};
+//             if((x>=6 && x<image.width()-6) && (y>=6 && y<image.height()-6)){
+//                 for(i; i<6; i++){
+//                     for(j; j<6; j++){
+//                         image.pixel(x, y) += image.pixel(x+i, y+j)+image.pixel(x-i, y-j);
+//                         iter+=2;
+//                     }
+//                 }
+//                 image.pixel(x, y) /= glm::vec3(iter);
+//             }
             
-        }
-    }
-    image.save("output_l/convolution_boucles.png");
-}
+//         }
+//     }
+//     image.save("output_l/convolution_boucles.png");
+//}
+
+
+
 {
-    //Avec matrices -> le vrai, normalement
+    //Exo Convolution
     sil::Image logo {"images/logo.png"};
     sil::Image image {logo};
     std::vector<std::vector<float>> kernel {
@@ -567,18 +570,19 @@ void main_lison()
     // }
     int coordx {0};
     int coordy {0};
+    
     for(int x {0}; x<image.width(); x++){
         for(int y {0}; y<image.height(); y++){
             glm::vec3 couleur {0};
             for(int i {-(static_cast<int>(kernel.size())/2)}; i<(static_cast<int>(kernel.size())); i++){
                 for(int j {-(static_cast<int>(kernel.size())/2)}; j<(static_cast<int>(kernel[0].size())); j++){
                     coordx = x+i;
-                    coordy = y+i;
+                    coordy = y+j;
                     if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(kernel[0].size())/2<kernel[0].size() && i+static_cast<int>(kernel.size())/2<kernel.size()){ //
-                        couleur = logo.pixel(coordx, coordy)*kernel[i+static_cast<int>(kernel.size())/2][j+static_cast<int>(kernel[0].size())/2];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
+                        couleur += logo.pixel(coordx, coordy)*kernel[i+static_cast<int>(kernel.size())/2][j+static_cast<int>(kernel[0].size())/2];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
                     }
                     else {
-                        image.pixel(x, y) += glm::vec3(0); 
+                        couleur += glm::vec3(0);   //image.pixel(x, y)
                     }
                 }
             }
@@ -591,62 +595,117 @@ void main_lison()
     image.save("output_l/convolution.png");
 }
 
-//Tentative avec différentes matrices : 
-
 {
     std::vector<std::vector<float>> matrix_emboss {
         {-2.f, -1.f, 0.f},
         {-1.f, 1.f, 1.f},
         {0.f, 1.f, 2.f}
     };
+
+    sil::Image logo {"images/logo.png"};
+    sil::Image image {logo};
+    int Total{0};
+    int coordx {0};
+    int coordy {0};
+
+    //ICI POUR LE EMBOSS
+    
+    for(int x {0}; x<image.width(); x++){
+        for(int y {0}; y<image.height(); y++){
+            glm::vec3 couleur {0};
+            for(int i {-(static_cast<int>(matrix_emboss.size())/2)}; i<(static_cast<int>(matrix_emboss.size())); i++){
+                for(int j {-(static_cast<int>(matrix_emboss.size())/2)}; j<(static_cast<int>(matrix_emboss[0].size())); j++){
+                    coordx = x+i;
+                    coordy = y+j;
+                    if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(matrix_emboss[0].size())/2<matrix_emboss[0].size() && i+static_cast<int>(matrix_emboss.size())/2<matrix_emboss.size()){ //
+                        couleur += logo.pixel(coordx, coordy)*matrix_emboss[i+static_cast<int>(matrix_emboss.size())/2][j+static_cast<int>(matrix_emboss[0].size())/2];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
+                    }
+                    else {
+                        couleur += glm::vec3(0);   //image.pixel(x, y)
+                    }
+                }
+            }
+            // if(Total!=0){
+            //     couleur=couleur/Total;
+            // }
+            image.pixel(x, y) = couleur;
+        }
+    }
+    image.save("output_l/emboss.png");
+}
+
+{  //ICI POUR LE OUTLINE
     std::vector<std::vector<float>> matrix_outline {
         {-1.f, -1.f, -1.f},
         {-1.f, 8.f, -1.f},
         {-1.f, -1.f, -1.f}
     };
-    std::vector<std::vector<int>> matrix_sharpen {
-        {0, -1, 0},
-        {-1, 5, -1},
-        {0, -1, 0}
+
+    sil::Image logo {"images/logo.png"};
+    sil::Image image {logo};
+    int Total{0};
+    int coordx {0};
+    int coordy {0};
+
+    for(int x {0}; x<image.width(); x++){
+        for(int y {0}; y<image.height(); y++){
+            glm::vec3 couleur {0};
+            for(int i {-(static_cast<int>(matrix_outline.size())/2)}; i<(static_cast<int>(matrix_outline.size())); i++){
+                for(int j {-(static_cast<int>(matrix_outline.size())/2)}; j<(static_cast<int>(matrix_outline[0].size())); j++){
+                    coordx = x+i;
+                    coordy = y+j;
+                    if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(matrix_outline[0].size())/2<matrix_outline[0].size() && i+static_cast<int>(matrix_outline.size())/2<matrix_outline.size()){ //
+                        couleur += logo.pixel(coordx, coordy)*matrix_outline[i+static_cast<int>(matrix_outline.size())/2][j+static_cast<int>(matrix_outline[0].size())/2];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
+                    }
+                    else {
+                        couleur += glm::vec3(0);   //image.pixel(x, y)
+                    }
+                }
+            }
+            // if(Total!=0){
+            //     couleur=couleur/Total;
+            // }
+            image.pixel(x, y) = couleur;
+        }
+    }
+    image.save("output_l/outline.png");
+}
+
+{  //ICI POUR LE SHARPEN
+    std::vector<std::vector<float>> matrix_sharpen {
+        {0.f, -1.f, 0.f},
+        {-1.f, 5.f, -1.f},
+        {0.f, -1.f, 0.f}
     };
 
     sil::Image logo {"images/logo.png"};
     sil::Image image {logo};
     int Total{0};
-    for (std::vector<int> line : matrix_sharpen)
-    {
-        for (int nb : line)
-        {
-            Total += nb;
-        }
-    }
-    for(int i {0}; i<matrix_sharpen.size(); i++){
-        
-    }
     int coordx {0};
     int coordy {0};
+
     for(int x {0}; x<image.width(); x++){
         for(int y {0}; y<image.height(); y++){
             glm::vec3 couleur {0};
             for(int i {-(static_cast<int>(matrix_sharpen.size())/2)}; i<(static_cast<int>(matrix_sharpen.size())); i++){
                 for(int j {-(static_cast<int>(matrix_sharpen.size())/2)}; j<(static_cast<int>(matrix_sharpen[0].size())); j++){
                     coordx = x+i;
-                    coordy = y+i;
+                    coordy = y+j;
                     if(coordx>0 && coordx<image.width() && coordy>0 && coordy<image.height() && j+static_cast<int>(matrix_sharpen[0].size())/2<matrix_sharpen[0].size() && i+static_cast<int>(matrix_sharpen.size())/2<matrix_sharpen.size()){ //
-                        couleur = image.pixel(coordx, coordy)*static_cast<float>(matrix_sharpen[i+static_cast<int>(matrix_sharpen.size())/2 ][j+static_cast<int>(matrix_sharpen[0].size())/2]);   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
+                        couleur += logo.pixel(coordx, coordy)*matrix_sharpen[i+static_cast<int>(matrix_sharpen.size())/2][j+static_cast<int>(matrix_sharpen[0].size())/2];   //+static_cast<int>(kernel.size())/2    //+static_cast<int>(kernel[0].size())/2
                     }
                     else {
-                        image.pixel(x, y) += glm::vec3(0); 
+                        couleur += glm::vec3(0);   //image.pixel(x, y)
                     }
                 }
             }
-            if(Total!=0){
-                couleur=couleur/static_cast<float>(Total);
-            }
+            // if(Total!=0){
+            //     couleur=couleur/Total;
+            // }
             image.pixel(x, y) = couleur;
         }
     }
-    image.save("output_l/sharpen_essai.png");
+    image.save("output_l/sharpen.png");
 }
 
 }
