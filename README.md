@@ -1,25 +1,25 @@
 
-##Ne garder que le vert
+## Ne garder que le vert
 |![image](./images/logo.png) |![image](./output_l/tout_en_vert.png)|
 | ------------- |-------------|
 
 ---
-##Échanger les canaux
+## Échanger les canaux
 |![image](./images/logo.png) |![image](./output_l/canaux_echanges.png)|
 | ------------- |-------------|
 
 ---
-##Noir & Blanc
+## Noir & Blanc
 |![image](./images/logo.png) |![image](./output_l/noir_et_blanc.png)|
 | ------------- |-------------|
 
 ---
-##Négatif
+## Négatif
 |![image](./images/logo.png) |![image](./output_l/negatif.png)|
 | ------------- |-------------|
 
 ---
-##Dégradé
+## Dégradé
 ![image](./output_l/degrade.png)
 
 Le calcul a pris un peu de temps à être trouvé, mais c'est :
@@ -29,7 +29,7 @@ image.pixel(i, y) += color;
 ```
 ---
 
-##Miroir
+## Miroir
 |![image](./images/logo.png) |![image](./output_l/miroir.png)|
 | ------------- |-------------|
 
@@ -54,21 +54,21 @@ image.pixel(miroir, y) = couleur;
 ```
 ---
 
-##Image bruitée
+## Image bruitée
 |![image](./images/logo.png) |![image](./output_l/bruitee.png)|
 | ------------- |-------------|
 
 Pour cet effet, nous avons fait en sorte d'avoir des coordonnées de pixels `random`, et ensuite nous avons fait de même pour chaque partie de la couleur du pixel en question.
 
 ---
-##Rotation 90°
+## Rotation 90°
 |![image](./images/logo.png) |![image](./output_l/rotation_90.png)|
 | ------------- |-------------|
 
 Nous avons créé une nouvelle image en inversant les valeurs de `width` et de `height`. Puis nous avons recopié l'image à partir des bonnes coordonnées.
 
 ---
-##RGB Split
+## RGB Split
 |![image](./images/logo.png) |![image](./output_l/rgb_split.png)|
 | ------------- |-------------|
 
@@ -96,7 +96,7 @@ sil::Image split{image.width(), image.height()};
 ```
 
 ---
-##Luminosité
+## Luminosité
 
 |Image de référence |Après éclaircissement |Après assombrissement |
 | ------------- |-------------| -----|
@@ -105,7 +105,7 @@ sil::Image split{image.width(), image.height()};
 Pour les deux nous avons utilisé la fonction `pow()`, avec différentes valeurs de puissance.
 
 ---
-##Disque
+## Disque
 ![image](./output_l/disque.png)
 
 Dans le `if` pour colorer les bons pixels, nous avons utilisé :
@@ -114,13 +114,13 @@ std::pow(i - image.width()/2, 2) + std::pow(j - image.height()/2, 2) <= std::pow
 ```
 
 ---
-##Cercle
+## Cercle
 ![image](./output_l/cercle.png)
 
 Nous avons utilisé deux fois le même `if` que pour le disque, avec des valeurs différentes.
 
 ---
-##Rosace
+## Rosace
 ![image](./output_l/rosace.png)
 
 Nous avons recréé une fonction `dessine_cercle`, que l'on a appelé plusieurs fois, pour dessiner les différents cercles de la rosace.
@@ -143,31 +143,31 @@ sil::Image dessine_cercle(sil::Image& photo, int center_x, int center_y){
 ```
 
 ---
-##Mosaïque
+## Mosaïque
 |![image](./images/logo.png) |![image](./output_l/mosaique.png)|
 | ------------- |-------------|
 
 ---
-##Mosaïque miroir
+## Mosaïque miroir
 | ![image](./images/logo.png)      | ![image](./output_l/mosaique_miroir_autre.png)        | ![image](./output_l/mosaique_miroir.png)  |
 | ------------- |-------------| -----|
 
 ---
-##Glitch
+## Glitch
 |![image](./images/logo.png) |![image](./output_l/glitch_2.png) |![image](./output_l/glitch.png)
 | ------------- |-------------| -----|
 
 ---
-##Fractale de Mandelbrot
+## Fractale de Mandelbrot
 ![image](./output_l/fractale_mandelbrot.png)
 
 ---
-##Vortex
+## Vortex
 |![image](./images/logo.png) |![image](./output_s/vortex.png)
 | ------------- |-------------|
 
 ---
-##Tramage
+## Tramage
 |![image](./images/photo.jpg) |![image](./output_s/tramage.jpg) |
 | ------------- |-------------|
 
@@ -207,14 +207,14 @@ void Dithering(sil::Image& image)
 ```
 
 ---
-##Normalisation de l'histogramme
+## Normalisation de l'histogramme
 |![image](./images/photo.jpg) |![image](./output_s/histogramme.jpg)|
 | ------------- |-------------|
 
 ---
-##Convolution (et essais de netteté)
+## Convolution (et essais de netteté)
 
 ---
-##Tri de pixels
+## Tri de pixels
 |![image](./images/logo.png) |![image](./output_s/tri_pixels.png)|
 | ------------- |-------------|
