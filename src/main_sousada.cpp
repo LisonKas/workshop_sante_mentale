@@ -384,7 +384,7 @@ void Dithering(sil::Image& image)
 }
 
 
-void Historiogramme(sil::Image& image)
+void Histogramme(sil::Image& image)
 {
     float valeur_minimale_r = 1.f;
     float valeur_maximale_r = 0.f;
@@ -578,10 +578,10 @@ void main_sousada()
     }
 
     {
-        //EXO : Normalisation de l'historiogramme
+        //EXO : Normalisation de l'histogramme
         sil::Image image{"images/photo_faible_contraste.jpg"};
-        Historiogramme(image);
-        image.save("output_s/historiogramme.jpg");
+        Histogramme(image);
+        image.save("output_s/histogramme.jpg");
     }
 
     {
