@@ -111,7 +111,7 @@ Pour les deux images, nous avons utilisé la fonction `pow()` avec différentes 
 
 Dans le `if` pour colorer les bons pixels, nous avons utilisé :
 ```cpp
-pow(i - image.width()/2, 2) + pow(j - image.height()/2, 2) <= pow(100, 2);
+std::pow(i - image.width()/2, 2) + std::pow(j - image.height()/2, 2) <= std::pow(100, 2);
 ```
 
 ---
