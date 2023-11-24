@@ -193,9 +193,9 @@ void Disc(sil::Image& image)
     glm::vec3 colorDisc(1.0f, 1.0f, 1.0f);
 
     // Dessin disque
-    for (int y = 0; y < image.height(); y++) 
+    for (int y{0}; y < image.height(); y++) 
     {
-        for (int x = 0; x < image.width(); x++) 
+        for (int x{0}; x < image.width(); x++) 
         {
             if (pow(x - centerX, 2) + pow(y - centerY, 2) <= pow(radius, 2)) 
             {
@@ -216,9 +216,9 @@ void Circle(sil::Image& image)
     glm::vec3 colorCircle(1.0f, 1.0f, 1.0f);
 
     // Dessin cercle
-    for (int y = 0; y < image.height(); y++) 
+    for (int y{0}; y < image.height(); y++) 
     {
-        for (int x = 0; x < image.width(); x++) 
+        for (int x{0}; x < image.width(); x++) 
         {
             if (pow(x - centerX, 2) + pow(y - centerY, 2) <= pow(radiusExt, 2)) 
             {
@@ -239,9 +239,9 @@ void Rosace(sil::Image& image, int centerX, int centerY)
     glm::vec3 colorCircle(1.0f, 1.0f, 1.0f);
 
     // Dessin cercle
-    for (int y = 0; y < image.height(); y++) 
+    for (int y{0}; y < image.height(); y++) 
     {
-        for (int x = 0; x < image.width(); x++) 
+        for (int x{0}; x < image.width(); x++) 
         {
             if (pow(x - centerX, 2) + pow(y - centerY, 2) <= pow(radiusExt, 2)) 
             {
@@ -259,7 +259,8 @@ void Glitch(sil::Image& image)
 {
     int nb_rectangles_a_echanger = 50;
 
-    for (int i{0}; i < nb_rectangles_a_echanger; i++) {
+    for (int i{0}; i < nb_rectangles_a_echanger; i++) 
+    {
         // Coordonnées rectangle01
         int x1 = random_int(0, image.width() - 1 - 50);
         int y1 = random_int(0, image.height() - 1 - 10);
@@ -273,8 +274,10 @@ void Glitch(sil::Image& image)
         int height2 = random_int(5, 10);
 
         // Echange rectangles
-        for (int dy{0}; dy < height1; dy++) {
-            for (int dx{0}; dx < width1; dx++) {
+        for (int dy{0}; dy < height1; dy++) 
+        {
+            for (int dx{0}; dx < width1; dx++) 
+            {
                 int rectangle01_X = x1 + dx;
                 int rectangle01_Y = y1 + dy;
 
@@ -299,8 +302,10 @@ void Vortex(sil::Image& image)
     // float centerX = static_cast<float>(image.width()) / 2.0f;
     // float centerY = static_cast<float>(image.height()) / 2.0f;
 
-    // for (int y = 0; y < image.height(); y++) {
-    //     for (int x = 0; x < image.width(); x++) {
+    // for (int y{0}; y < image.height(); y++) 
+    // {
+    //     for (int x{0}; x < image.width(); x++) 
+    //     {
             
     //         float distanceX = static_cast<float>(x) - centerX;
     //         float distanceY = static_cast<float>(y) - centerY;
@@ -322,8 +327,10 @@ void Vortex(sil::Image& image)
 
     float vortexFactor = 0.2f;
 
-    for (int y = 0; y < image.height(); y++) {
-        for (int x = 0; x < image.width(); x++) {
+    for (int y{0}; y < image.height(); y++) 
+    {
+        for (int x{0}; x < image.width(); x++) 
+        {
             
             glm::vec2 offset{x - center.x, y - center.y};
 
@@ -355,21 +362,93 @@ void Dithering(sil::Image& image)
     {  0.4375, -0.0625,  0.3125, -0.1875 },
     };
 
-    for (int y = 0; y < image.height(); y++) {
-        //float orig_color = static_cast<float>(y) / image.height();;
+    for (int y{0}; y < image.height(); y++) 
+    {
 
-        for (int x = 0; x < image.width(); x++) {
+        for (int x{0}; x < image.width(); x++) 
+        {
             float orig_color = image.pixel(x, y).r;
             float color_result = 0.f;
             float bayer_value = bayer_matrix_4x4[y % bayer_n][x % bayer_n];
             float output_color = orig_color + (2 * bayer_value);
 
-            if (output_color > 0.5) {
+            if (output_color > 0.5) 
+            {
                 color_result = 1.f;
             }
 
             glm::vec3 Color(color_result);
             image.pixel(x, y) = Color;
+        }
+    }
+}
+
+
+void Historiogramme(sil::Image& image)
+{
+    float valeur_minimale_r = 1.f;
+    float valeur_maximale_r = 0.f;
+    float valeur_minimale_g = 1.f;
+    float valeur_maximale_g = 0.f;
+    float valeur_minimale_b = 1.f;
+    float valeur_maximale_b = 0.f;
+
+    for (int y{0}; y < image.height(); y++) 
+    {
+        for (int x{0}; x < image.width(); x++) 
+        {
+            float pixel_original_r = image.pixel(x, y).r;
+            float pixel_original_g = image.pixel(x, y).g;
+            float pixel_original_b = image.pixel(x, y).b;
+            
+            valeur_minimale_r = std::min(valeur_minimale_r, pixel_original_r);
+            valeur_maximale_r = std::max(valeur_maximale_r, pixel_original_r);
+
+            valeur_minimale_g = std::min(valeur_minimale_g, pixel_original_g);
+            valeur_maximale_g = std::max(valeur_maximale_g, pixel_original_g);
+
+            valeur_minimale_b = std::min(valeur_minimale_b, pixel_original_b);
+            valeur_maximale_b = std::max(valeur_maximale_b, pixel_original_b);
+        }
+    }
+
+    for (int y{0}; y < image.height(); y++) 
+    {
+        for (int x{0}; x < image.width(); x++) 
+        {
+            float pixel_original_r = image.pixel(x, y).r;
+            float pixel_original_g = image.pixel(x, y).g;
+            float pixel_original_b = image.pixel(x, y).b;
+
+            float pixel_normalise_r = (pixel_original_r - valeur_minimale_r) / (valeur_maximale_r - valeur_minimale_r);
+            float pixel_normalise_g = (pixel_original_g - valeur_minimale_g) / (valeur_maximale_g - valeur_minimale_g);
+            float pixel_normalise_b = (pixel_original_b - valeur_minimale_b) / (valeur_maximale_b - valeur_minimale_b);
+
+            glm::vec3 Color(pixel_normalise_r, pixel_normalise_g, pixel_normalise_b);
+            image.pixel(x, y) = Color;
+        }
+    }
+}
+
+
+void PixelsSort(sil::Image& image)
+{
+    for (int x{0}; x < image.width(); x++) 
+    {
+        std::vector<glm::vec3> Pixels;
+        for (int y{0}; y < image.height(); y++) 
+        {
+            Pixels.push_back(image.pixel(x, y));
+        }
+
+        std::sort(Pixels.begin(), Pixels.end(), [](glm::vec3 const& color1, glm::vec3 const& color2) 
+        {
+            return color1.r < color2.r;
+        });
+
+        for (int y{0}; y < image.height(); y++) 
+        {
+            image.pixel(x, y) = Pixels[y];
         }
     }
 }
@@ -496,5 +575,19 @@ void main_sousada()
         sil::Image image{"images/photo.jpg"};
         Dithering(image);
         image.save("output_s/tramage.jpg");
+    }
+
+    {
+        //EXO : Normalisation de l'historiogramme
+        sil::Image image{"images/photo_faible_contraste.jpg"};
+        Historiogramme(image);
+        image.save("output_s/historiogramme.jpg");
+    }
+
+    {
+        //EXO : Tri de pixels
+        sil::Image image{"images/logo.png"};
+        PixelsSort(image);
+        image.save("output_s/tri_pixels.png");
     }
 }
