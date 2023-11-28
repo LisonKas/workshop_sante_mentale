@@ -345,7 +345,7 @@ void Vortex(sil::Image& image)
             rotatedX = glm::clamp(rotatedX, 0, image.width() - 1);
             rotatedY = glm::clamp(rotatedY, 0, image.height() - 1);
 
-            image.pixel(x, y) = image.pixel(rotatedX, rotatedY);
+            image.pixel(x, y) = image.pixel(rotatedX, rotatedY); // Attention, si vous lisez dans la même image que vous êtes en train de modifier, ça va faire des trucs bizarres. Faites toujours une copie de l'image originale et lisez dans celle-ci, pour tous les cas où un pixel de l'image prend la couleur d'un autre pixel ailleurs dans l'image.
         }
     }
 }
