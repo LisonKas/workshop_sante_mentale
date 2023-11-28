@@ -238,7 +238,7 @@ void Dithering(sil::Image& image)
 |![image](./images/photo.jpg) |![image](./output_s/histogramme.jpg)|
 | ------------- |-------------|
 
-Ce code normalise les valeurs des composantes rouge *r*, verte *g*, et bleue *b* de chaque pixel dans une image. Il parcourt l'image deux fois : la première fois pour déterminer les valeurs minimales et maximales de chaque composante, et la deuxième fois pour normaliser les valeurs des pixels en fonction de ces extrêmes. La normalisation est effectuée en ajustant les valeurs de chaque composante à une échelle entre 0 et 1 en utilisant la formule `(pixel_original - valeur_minimale) / (valeur_maximale - valeur_minimale)`.
+Ce code normalise les valeurs des composantes rouge *r*, verte *g*, et bleue *b* de chaque pixel dans une image. <!-- Le fait que vous fassiez ça une fois par composante, au lieu de le faire une fois pour toute la couleur est ce qui cause un shift dans les couleurs (vers le vert / bleu en l'occurrence) --> Il parcourt l'image deux fois : la première fois pour déterminer les valeurs minimales et maximales de chaque composante, et la deuxième fois pour normaliser les valeurs des pixels en fonction de ces extrêmes. La normalisation est effectuée en ajustant les valeurs de chaque composante à une échelle entre 0 et 1 en utilisant la formule `(pixel_original - valeur_minimale) / (valeur_maximale - valeur_minimale)`.
 
 ---
 ## Convolution

@@ -10,7 +10,7 @@ sil::Image dessine_cercle(sil::Image& photo, int center_x, int center_y){  //Pou
     for(int i {0}; i<photo.width(); i++){
         for(int j {0}; j<photo.height(); j++){
             float const distance_carre { static_cast<float>(std::pow(i - center_x, 2) + std::pow(j - center_y, 2))};
-            if(distance_carre <= std::pow(100, 2)){
+            if(distance_carre <= std::pow(100, 2)){ // Vous auriez pu faire une variable pour stocker le rayon, tout comme vous l'avez fait pour la thickness
                 if(distance_carre >= std::pow(100-thickness, 2)){
                     // photo.pixel(i, j).r = 1.f;
                     // photo.pixel(i, j).g = 1.f;
@@ -42,7 +42,7 @@ sil::Image al_envers(sil::Image& image){
             rota.pixel(i, y) = image.pixel(y, image.height()-1-i);
         }
     }
-    sil::Image rota_90{rota.height(), rota.width()};
+    sil::Image rota_90{rota.height(), rota.width()}; // Cette image n'est utilisée nulle part
     for(int i {0}; i<image.width(); i++){
         for(int y {0}; y<image.height(); y++){
             image.pixel(i, y) = rota.pixel(y, rota.height()-1-i);
@@ -241,6 +241,8 @@ void main_lison()
     int y = image.height()/2;
     dessine_cercle(image, x, y);
 
+    // Vous auriez pu faire une boucle pour dessiner ces 6 cercles : leurs centres correspondent à des angles de 0, pi/3, 2*pi/3, 3*pi/3, 4*pi/3 etc.
+    // L'intérêt d'une boucle c'est que ça vous aurait permis facilement de dessiner 100 cercles au lieu de 6, et obtenir des variations intéressantes de l'effet
     dessine_cercle(image, x-95, y);
     dessine_cercle(image, x+95, y);
     int x_trigo {static_cast<int>(95*std::cos(M_PI/3.0))};
@@ -608,7 +610,7 @@ void main_lison()
     int coordx {0};
     int coordy {0};
 
-    //ICI POUR LE EMBOSS
+    //ICI POUR LE EMBOSS // Plutôt que de copier-coller votre code de convolution pour chaque kernel que vous voulez tester, vous auriez pu faire une fonction `convolution(sil::Image& image, std::vector<std::vector<float>> const& kernel)` qui prend n'importe quel kernel en paramètre 
     
     for(int x {0}; x<image.width(); x++){
         for(int y {0}; y<image.height(); y++){
